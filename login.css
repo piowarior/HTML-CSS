@@ -1,0 +1,16 @@
+body{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+
+}
+
+.hero{
+    background-color: blueviolet;
+    width: 500px;
+    height: 500px;
+    margin-top: 10vh;
+    
+}

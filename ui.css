@@ -1,0 +1,367 @@
+*{
+    list-style: none;
+    outline: none;
+    text-decoration: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: url(img/otho\ ai.jpg);
+    background-size: cover;
+}
+
+/* navbar */
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.search{
+    margin-top: 25px;
+    margin-left: 60px;
+}
+
+.search input{
+    width: 300px;
+    height: 65px;
+    border-radius: 50px;
+    border: 1px solid black;
+    padding-left: 10px;
+    font-family: 'Poppins';
+    font-size: 17px;
+}
+
+.navbar ul{
+    display: flex;
+    gap: 13px;
+    padding-right: 40px;
+    align-items: center;
+}
+
+.navbar ul img{
+    width: 50px;
+    border-radius: 50px;
+}
+
+.navbar ul li:first-child img{
+    outline: 1px solid black;
+    background-color: rgb(255, 255, 255);
+    padding: 15px;
+}
+
+.navbar ul li:nth-child(2),
+.navbar ul li:nth-child(3){
+    width: 130px;
+    height: 60px;
+    display: flex;
+    justify-content: end;
+    padding-top: 5px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50px;
+    outline: 1px solid black;
+    
+}
+
+.navbar ul li:nth-child(3){
+    justify-content: start;
+    padding-left: 5px;
+}
+
+.navbar ul li span{
+    color: rgb(0, 0, 0);
+    font-family: 'Poppins';
+    font-size: 15px;
+    font-weight: bold;
+    position: relative;
+    top: -16px;
+
+}
+
+.navbar ul li span:nth-child(2){
+    right: -8px;
+    
+}
+
+.navbar ul li:hover{
+    transform: scale(1.1);
+}
+
+
+/* isi  */
+
+.isi{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ------------------isi kiri------------------- */
+
+.isi-kiri{
+    flex-direction: column;
+    /* background-color: yellow; */
+
+    ul{
+        flex-direction: column;
+        position: relative;   
+        top: 60px;  
+        width: 180px;
+        /* background-color: gray; */
+    }
+
+    ul li{
+        margin-bottom: 10px;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        background-color: rgb(255, 255, 255);
+        align-items: center;
+        justify-content: center;
+        outline: 2.5px solid black;
+        border-radius: 50px;
+
+    }
+
+    ul img{
+        width: 40px;
+        display: block;
+    }
+
+    ul li:nth-child(4){
+        margin-bottom: 30px;
+
+    }
+
+    ul li:nth-child(5) img{
+        width: 30px;
+        background-color: rgb(255, 255, 255);
+        padding: 10px;
+        border-radius: 15px;
+        position: relative;
+        bottom: -15px;
+    }
+
+    ul li:nth-child(5){
+        width: 71px;
+        height: 130px;
+        background-color: rgb(12, 19, 19);
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        border-radius: 50px;
+        
+
+    }
+
+    ul li span:nth-child(1){
+        color: aliceblue;
+        position: relative;
+        top: -20px;
+        left: 5px;
+        font-family: Poppins;
+        font-weight: bold;
+        
+    }
+
+    .akhir-all{
+        display: flex;
+        /* background-color: aqua; */
+        align-items: end;
+
+        .akhir2{
+            display: flex;
+            width: 300px;
+            height: 300px;
+            /* background-color: rgb(249, 155, 155); */
+            margin-right: 35px;
+            position: relative;
+            bottom: -44px;
+
+            .akhir2-anak1{
+                width: 200px;
+                height: 300px;
+                background-color: rgba(0, 0, 0, 0.5);
+                border-radius: 50px 50px 0px 50px;
+
+            }
+
+            .akhir2-anak-all{
+                flex-direction: column;
+
+                .akhir2-anak2{
+                    width: 100px;
+                    height: 100px;
+                    background-color: transparent;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .akhir2-anak2::before{
+                    content: '';
+                    width: 100px;
+                    height: 100px;
+                    position: absolute;
+                    box-shadow: -50px 50px 0 0 rgba(0, 0, 0, 0.5);
+                    border-radius: 90%;
+                }
+
+                .akhir2-anak3{
+                    width: 100px;
+                    height: 200px;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    border-radius: 0px 50px 50px 0px;
+                }
+    
+            }
+
+
+            
+        }
+
+        .akhir3{
+            display: flex;
+            width: 300px;
+            height: 300px;
+            /* background-color: rgb(79, 33, 33); */
+            position: relative;
+            bottom: -44px;
+
+            .akhir3-anak1{
+                width: 200px;
+                height: 300px;
+                background-color: rgba(0, 0, 0, 0.5);
+                border-radius: 50px 50px 0px 50px;
+
+            }
+            
+            .akhir3-anak-all2{
+                flex-direction: column;
+
+                .akhir3-anak2{
+                    width: 100px;
+                    height: 100px;
+                    background-color: transparent;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .akhir3-anak2::before{
+                    content: '';
+                    width: 100px;
+                    height: 100px;
+                    position: absolute;
+                    box-shadow: -50px 50px 0 0 rgba(0, 0, 0, 0.5);
+                    border-radius: 90%;
+                }
+
+                .akhir3-anak3{
+                    width: 100px;
+                    height: 200px;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    border-radius: 0px 50px 50px 0px;
+                }
+    
+            }
+
+        }
+    }
+
+}
+
+.hallo{
+    font-size: 70px;
+    font-family: 'Poppins';
+    margin-left: 70px;
+    width: 1000px;
+}
+
+.hallo span{
+    color: rgb(87, 145, 196);
+    position: relative;
+    left: 80px;
+}
+
+/* --------------isi kanan--------------- */
+.isi-kanan{
+    flex-direction: column;
+    /* background-color: rgb(255, 255, 255); */
+    padding-right: 40px;
+
+    .kegiatan-all{
+        width: 380px;
+        height: 580px;
+        /* background-color: rgb(255, 255, 255); */
+    }
+
+    .kegiatan {
+        width: 380px;
+        height: 500px;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        border-radius: 50px 50px 50px 0px;
+        position: relative;
+    }
+
+    .kegiatan-anak{
+        display: flex;
+    }
+    
+    .kegiatan2{
+        width: 160px;
+        height: 80px;
+        border-radius: 0px 0px 50px 50px;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+    }
+
+    .kegiatan3{
+        width: 220px;
+        height: 300px;
+        position: relative;
+        align-items: center;
+        justify-content: end;
+        display: flex;
+        overflow: hidden;
+
+        .total-target{
+            margin-top: 20px;
+            width: 180px;
+            height: 280px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50px;
+        }
+    }
+
+    .kegiatan3::before{
+        content: '';
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 30px;
+        height: 35px;
+        border-radius: 50px ;
+        box-shadow: -10px -10px 0 rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        background: transparent;
+    }
+
+
+    
+
+    /* .kegiatan::before{
+        content: '';
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        width: 200px;
+        height: 50px;
+        background-color: blue;
+        
+    } */
+
+
+}
+
+
+

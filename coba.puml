@@ -1,0 +1,54 @@
+@startuml
+top to bottom direction
+
+entity "User" as U {
+  + user_id : int
+  + username : string
+  + password : string
+  + email : string
+  + role : string
+}
+
+entity "Pelapor" as P {
+  + pelapor_id : int
+  + nama : string
+  + kontak : string
+}
+
+entity "Laporan" as L {
+  + laporan_id : int
+  + judul : string
+  + deskripsi : text
+  + status : string
+  + tanggal_dibuat : datetime
+  + prioritas : string
+  + pelapor_id : int
+}
+
+entity "Tindak_Lanjut" as TL {
+  + tindak_id : int
+  + laporan_id : int
+  + petugas_id : int
+  + tindakan : string
+  + tanggal_tindak : datetime
+}
+
+entity "Petugas" as PT {
+  + petugas_id : int
+  + nama : string
+  + divisi : string
+}
+
+entity "Notifikasi" as N {
+  + notifikasi_id : int
+  + laporan_id : int
+  + pesan : string
+  + tanggal_kirim : datetime
+}
+
+U ||--o{ L : "Membuat"
+P ||--o{ L : "Melaporkan"
+L ||--o{ TL : "Ditindaklanjuti"
+PT ||--o{ TL : "Melakukan"
+L ||--o{ N : "Memicu"
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+start
+:Pelayanan Dibuka;
+:Pelaksanaan Pemesanan oleh Pelanggan;
+if (Pilih Nominal Top-Up?) then (Ya)
+  :Sistem Menampilkan Nominal yang Dipilih;
+  :Pelanggan Memilih Metode Pembayaran;
+  :Sistem Memproses Pembayaran;
+  if (Pembayaran Berhasil?) then (Ya)
+    :Saldo/Mata Uang Game Dikirimkan;
+    :Notifikasi Keberhasilan ke Pelanggan;
+  else (Tidak)
+    :Notifikasi Gagal ke Pelanggan;
+    :Masalah Ditangani Customer Support;
+  endif
+else (Tidak)
+  :Pelanggan Membatalkan Transaksi;
+endif
+:Catatan Transaksi Disimpan ke Database;
+stop
+@enduml

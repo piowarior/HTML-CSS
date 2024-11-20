@@ -1,0 +1,35 @@
+@startuml
+left to right direction
+actor Pelanggan as P
+actor "Bagian Penjualan" as BP
+actor "Kepala Bagian Penjualan" as KBP
+
+rectangle "Sistem Penjualan PT. Nusantara" {
+    usecase "Pemesanan Barang" as UC1
+    usecase "Pembuatan Faktur" as UC2
+    usecase "Pembuatan Surat Jalan" as UC3
+    usecase "Pembuatan Kwitansi" as UC4
+    usecase "Pembuatan Laporan(diambil dari arsip)" as UC5
+    usecase "Pembuatan Laporan Penjualan" as UC6
+}
+
+' Hubungan Aktor dan Use Case
+P --> UC1 : "Membuat surat Pesanan"
+P <-- UC2 : "Menerima Faktur"
+P <-- UC3 : "Menerima Surat Jalan"
+P <-- UC4 : "Menerima Kwitansi"
+
+BP <-- UC1 : "Menerima Pesanan"
+BP --> UC2
+BP --> UC3
+BP --> UC4
+BP --> UC5 : " termasuk Arsip Surat Pesanan, Faktur, Surat Jalan,Kwitans "
+
+KBP <-- UC6 : "Menerima Laporan Penjualan"
+
+' Relasi antar Use Case
+UC5 ..> UC2 : <<include>>
+UC5 ..> UC3 : <<include>>
+UC5 ..> UC6 : <<include>>
+
+@enduml

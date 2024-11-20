@@ -2,9 +2,9 @@ Berikut adalah tabel sumber daya :
 
 | **Kategori**            | **Sumber Daya**                                                              | **Keterangan Detail**                                                                                  |  
 |--------------------------|-----------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|  
-| **1. Tenaga Kerja**      | **Customer Support**                                                       | Minimal 2 orang, bertugas menangani keluhan dan pertanyaan pelanggan secara responsif.               |  
-|                          | **Teknisi IT**                                                             | 1 orang, bertanggung jawab untuk memastikan kelancaran sistem dan aplikasi.                          |  
-|                          | **Marketing & Content Creator**                                            | 1 orang, mengelola promosi, media sosial, dan pembuatan konten untuk menarik pelanggan.              |  
+| **1. Tenaga Kerja**      | **Customer Support**                                                       | Minimal 4 orang, bertugas menangani keluhan dan pertanyaan pelanggan secara responsif.               |  
+|                          | **Teknisi IT**                                                             | 3 orang, bertanggung jawab untuk membuat/mengembangkan dan memastikan kelancaran sistem dan aplikasi.                          |  
+|                          | **Marketing & Content Creator**                                            | 3 orang, mengelola promosi, media sosial, dan pembuatan konten untuk menarik pelanggan.              |  
 |                          | **Admin Operasional**                                                      | 1 orang, mencatat transaksi dan laporan keuangan.                                                    |  
 | **2. Bahan Baku Utama**  | **Server & Hosting**                                                       | Cloud hosting dengan kapasitas minimal 1TB untuk menyimpan data transaksi pelanggan secara aman.     |  
 |                          | **Lisensi API Provider Game**                                              | Diperlukan untuk koneksi langsung dengan platform game populer seperti Free Fire, PUBG Mobile, dll.  |  

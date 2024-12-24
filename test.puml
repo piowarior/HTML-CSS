@@ -1,21 +1,29 @@
 @startuml
+scale 2
+title Grafik Proyeksi Pendapatan 6 Bulan
+
 start
-:Pelayanan Dibuka;
-:Pelaksanaan Pemesanan oleh Pelanggan;
-if (Pilih Nominal Top-Up?) then (Ya)
-  :Sistem Menampilkan Nominal yang Dipilih;
-  :Pelanggan Memilih Metode Pembayaran;
-  :Sistem Memproses Pembayaran;
-  if (Pembayaran Berhasil?) then (Ya)
-    :Saldo/Mata Uang Game Dikirimkan;
-    :Notifikasi Keberhasilan ke Pelanggan;
-  else (Tidak)
-    :Notifikasi Gagal ke Pelanggan;
-    :Masalah Ditangani Customer Support;
-  endif
-else (Tidak)
-  :Pelanggan Membatalkan Transaksi;
-endif
-:Catatan Transaksi Disimpan ke Database;
+:Proyeksi Pendapatan (IDR);
+:Kenaikan Pendapatan Stabil Setiap Bulan;
+
+partition "Bulan 1" {
+  :12.000.000 IDR;
+}
+partition "Bulan 2" {
+  :15.000.000 IDR;
+}
+partition "Bulan 3" {
+  :18.000.000 IDR;
+}
+partition "Bulan 4" {
+  :20.000.000 IDR;
+}
+partition "Bulan 5" {
+  :22.000.000 IDR;
+}
+partition "Bulan 6" {
+  :25.000.000 IDR;
+}
+
 stop
 @enduml

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Box Animation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .music-box {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 2px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .ball {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #000;
+            border-radius: 50%;
+            animation: rotateBall 4s linear infinite;
+        }
+
+        @keyframes rotateBall {
+            0% {
+                transform: translateX(-90px) translateY(0);
+            }
+            25% {
+                transform: translateX(0) translateY(-90px);
+            }
+            50% {
+                transform: translateX(90px) translateY(0);
+            }
+            75% {
+                transform: translateX(0) translateY(90px);
+            }
+            100% {
+                transform: translateX(-90px) translateY(0);
+            }
+        }
+
+        .play-button {
+            position: absolute;
+            bottom: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="music-box">
+        <div class="ball"></div>
+        <div class="play-button" onclick="togglePlay()">Play</div>
+    </div>
+
+    <audio id="audio" src="path_to_your_audio_file.mp3"></audio>
+
+    <script>
+        const audio = document.getElementById('audio');
+        const ball = document.querySelector('.ball');
+        let isPlaying = false;
+
+        function togglePlay() {
+            if (isPlaying) {
+                audio.pause();
+                ball.style.animationPlayState = 'paused';
+            } else {
+                audio.play();
+                ball.style.animationPlayState = 'running';
+            }
+            isPlaying = !isPlaying;
+        }
+    </script>
+</body>
+</html>

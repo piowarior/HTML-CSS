@@ -1,21 +1,27 @@
 @startuml
-start
-:Pelayanan Dibuka;
-:Pelaksanaan Pemesanan oleh Pelanggan;
-if (Pilih Nominal Top-Up?) then (Ya)
-  :Sistem Menampilkan Nominal yang Dipilih;
-  :Pelanggan Memilih Metode Pembayaran;
-  :Sistem Memproses Pembayaran;
-  if (Pembayaran Berhasil?) then (Ya)
-    :Saldo/Mata Uang Game Dikirimkan;
-    :Notifikasi Keberhasilan ke Pelanggan;
-  else (Tidak)
-    :Notifikasi Gagal ke Pelanggan;
-    :Masalah Ditangani Customer Support;
-  endif
-else (Tidak)
-  :Pelanggan Membatalkan Transaksi;
-endif
-:Catatan Transaksi Disimpan ke Database;
-stop
+
+title Use Case Diagram Sistem Pelaporan Kejahatan Online (SIPO)
+
+actor "Masyarakat" as user
+actor "Admin Kepolisian" as admin
+actor "Petugas Polisi" as officer
+
+usecase "Melapor" as UC_Melapor
+usecase "Melihat Laporan" as UC_MelihatLaporan
+usecase "Membuat Laporan" as UC_MembuatLaporan
+usecase "Memberikan Laporan" as UC_MemberikanLaporan
+usecase "Status Laporan" as UC_StatusLaporan
+usecase "Melakukan Tugas" as UC_MelakukanTugas
+
+user -- UC_Melapor
+user -- UC_MelihatLaporan
+
+admin -- UC_MembuatLaporan
+admin -- UC_MelihatLaporan
+admin -- UC_StatusLaporan
+
+officer -- UC_MemberikanLaporan
+officer -- UC_StatusLaporan
+officer -- UC_MelakukanTugas
+
 @enduml

@@ -1,0 +1,301 @@
+/* .kotak{
+    width: 400px;
+    height: 400px;
+    background-color: rgb(107, 107, 179);
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    span{
+        background-color: aquamarine;
+    }
+
+}
+
+.kotak span:hover{
+    color: aqua;
+    
+}
+
+
+
+.kotak2{
+    margin-top: 50px;
+    width: 400px;
+    height: 400px;
+    background-color: rgb(179, 142, 107);
+    display: grid;
+}
+
+.kotakmain{
+    width: 100px;
+    height: 100px;
+    background-color: aqua;
+    transition: all 1s;
+}
+
+.kotakmain:hover{
+    border-radius: 50px;
+    transform: rotate(180deg);
+    margin-left: 50px
+} */
+
+/* 
+.kotak_utama{
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 0 10px black;
+    width: 300px;
+    height: 70px;
+    align-items: center;
+
+    margin-bottom: 150px;
+}
+
+.kotak1{
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    span{
+        color: grey;
+        font-family: Arial;
+        margin-left: 15px;
+    }
+}
+
+.kotak1_utama{
+    width: 50px;
+    height: 50px;
+    background-color: aqua;
+    border-radius: 50px;
+
+}
+
+
+.kotak2{
+    display: flex;
+    background-color: aqua;
+    margin-right: 5px;
+    align-items: center;
+    height: 30px;
+    width: 50px;
+    border-radius: 20px;
+    justify-content: center;
+    a{
+        text-decoration: none;
+        color: rgb(255, 255, 255);
+
+    }
+}
+
+
+
+.box_utama{
+
+}
+
+.box1{
+    flex-direction: column;
+    span{
+        color: gray;
+    }
+    p{
+        font-family: Arial;
+    }
+    input{
+        margin-top: -5px;
+        border: none;
+        outline: 1px solid black;
+        border-radius: 5px;
+        width: 500px;
+        height: 30px;
+    }
+}
+
+.box2{
+
+    p{
+        font-size: larger;
+    }
+
+    button{
+        background-color: rgba(28, 128, 223, 0.747);
+        border-radius: 20px;
+        width: 500px;
+        height: 50px;
+        border: none;
+        outline: none;
+        font-size: larger;
+        color: white;
+    }
+} */
+
+body{
+    display: flex;
+
+}
+
+.gambar{
+
+    img{
+        width: 500px;
+        height: 500px;
+        object-fit: contain;
+        box-shadow: 0 0 0 1px black;
+        
+    }
+    
+}
+
+.kotak{
+    width: 300px;
+    height: 300px;
+    background-color: aquamarine;
+    margin-left: 30px;
+    border: 1px solid black;
+    a{
+        font-size: 100px;
+    }
+    span{
+        vertical-align: top;
+    }
+}
+
+.kotak2{
+    width: 50px;
+    height: 50px;
+    background-color: bisque;
+
+}
+
+
+.boxutama{
+    width: 300px;
+    height: 300px;
+    background-color: grey;
+    ul li{
+        list-style: none;
+        a{
+            text-decoration: none;
+            color: aqua;
+            font-family: monospace;
+            font-style: italic;
+            font-weight: bold;
+            font-size: larger;
+
+        }
+
+        
+    }
+
+    ul{
+        display: flex;
+        gap: 30px;
+        
+        :nth-child(2){
+            background-color: antiquewhite;
+            font-size: 50px;
+            
+        }
+    }
+}
+
+.lagi{
+    width: 300px;
+    height: 300px;
+    background-color: cadetblue;
+    margin: 0 30px;
+
+    .lagiutama{
+        width: 30px;
+        height: 30px;
+        background-color: aquamarine;
+    }
+
+    img{
+        width: 30px;
+        height: 30px;
+        filter: drop-shadow(5px 5px 0 black);
+    }
+}
+
+/* -------------------------- */
+
+.keren{
+
+    .keren1{
+        display: flex;
+
+        .keren1_utama1{
+            width: 180px;
+            height: 50px;
+            background-color: aqua;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .keren1_utama2{
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+
+        .keren1_utama2::before{
+            content: '';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            box-shadow: -20px 20px 0 aqua;
+
+            border-radius: 15px ;
+        }
+    }
+
+    .keren2{
+        
+        .keren2_utama1{
+            width: 225px;
+            height: 70px;
+            border-radius: 0 20px 0 20px;
+            background-color: aqua;
+
+        }
+
+        .keren2_utama2{
+            display: flex;
+
+            .inti{
+                width: 50px;
+                height: 50px;
+                background-color: transparent;
+                position: relative;
+            }
+
+            .inti::before{
+                content: '';
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                box-shadow: 20px -30px 0 aqua;
+                border-radius: 15px;
+            }
+
+            .inti2{
+                width: 175px;
+                height: 50px;
+                background-color: aqua;
+                border-radius: 0 0 20px 20px;
+            }
+        }
+
+        
+
+    }
+}
+
+
+.coba{
+    margin-left: 70px;
+    width: 100px;
+    height: 100px;
+    background-color: transparent;
+    box-shadow: -50px 50px black;
+    border-radius: 40px;
+}

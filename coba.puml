@@ -1,27 +1,23 @@
 @startuml
+[*] --> Menunggu : Sistem Aktif
 
-title Use Case Diagram Sistem Pelaporan Kejahatan Online (SIPO)
+Menunggu --> KartuDimasukkan : Masukkan kartu / Login
+KartuDimasukkan --> VerifikasiPIN : Masukkan PIN / Kata Sandi
+VerifikasiPIN --> Terverifikasi : PIN benar
+VerifikasiPIN --> Menunggu : PIN salah 3x
 
-actor "Masyarakat" as user
-actor "Admin Kepolisian" as admin
-actor "Petugas Polisi" as officer
+Terverifikasi --> PilihTransaksi : Pilih jenis transaksi
+PilihTransaksi --> ProsesTransaksi : Konfirmasi transaksi
+ProsesTransaksi --> TransaksiSelesai : Transaksi berhasil
 
-usecase "Melapor" as UC_Melapor
-usecase "Melihat Laporan" as UC_MelihatLaporan
-usecase "Membuat Laporan" as UC_MembuatLaporan
-usecase "Memberikan Laporan" as UC_MemberikanLaporan
-usecase "Status Laporan" as UC_StatusLaporan
-usecase "Melakukan Tugas" as UC_MelakukanTugas
+TransaksiSelesai --> Menunggu : Kartu dikeluarkan / Logout
 
-user -- UC_Melapor
-user -- UC_MelihatLaporan
+state Menunggu {
+    note right: Sistem menunggu interaksi\n dari pengguna
+}
 
-admin -- UC_MembuatLaporan
-admin -- UC_MelihatLaporan
-admin -- UC_StatusLaporan
-
-officer -- UC_MemberikanLaporan
-officer -- UC_StatusLaporan
-officer -- UC_MelakukanTugas
+state VerifikasiPIN {
+    note right: Sistem memverifikasi\n PIN atau kata sandi
+}
 
 @enduml

@@ -1,29 +1,44 @@
+**Diagram UML untuk Sistem Perpustakaan Online (Kode UML)**
+
+Berikut adalah kode UML dalam format PlantUML untuk menggambarkan ERD sistem perpustakaan online:
+
+```plantuml
 @startuml
-scale 2
-title Grafik Proyeksi Pendapatan 6 Bulan
 
-start
-:Proyeksi Pendapatan (IDR);
-:Kenaikan Pendapatan Stabil Setiap Bulan;
-
-partition "Bulan 1" {
-  :12.000.000 IDR;
-}
-partition "Bulan 2" {
-  :15.000.000 IDR;
-}
-partition "Bulan 3" {
-  :18.000.000 IDR;
-}
-partition "Bulan 4" {
-  :20.000.000 IDR;
-}
-partition "Bulan 5" {
-  :22.000.000 IDR;
-}
-partition "Bulan 6" {
-  :25.000.000 IDR;
+entity "Anggota" as Anggota {
+    + ID_Anggota : int
+    + Nama : string
+    + Email : string
+    + Tanggal_Daftar : date
 }
 
-stop
+entity "Buku" as Buku {
+    + ID_Buku : int
+    + Judul : string
+    + Penulis : string
+    + Penerbit : string
+    + Tahun_Terbit : int
+}
+
+entity "Peminjaman" as Peminjaman {
+    + ID_Peminjaman : int
+    + ID_Anggota : int
+    + ID_Buku : int
+    + Tanggal_Peminjaman : date
+    + Tanggal_Kembali : date
+    + Status : string
+}
+
+Anggota ||--o{ Peminjaman : melakukan
+Buku ||--o{ Peminjaman : dipinjam
+
 @enduml
+```
+
+### Penjelasan:
+- **Anggota** memiliki hubungan **1 ke banyak** dengan **Peminjaman**.
+- **Buku** memiliki hubungan **1 ke banyak** dengan **Peminjaman**.
+- **Peminjaman** sebagai entitas penghubung antara **Anggota** dan **Buku**.
+
+Kode ini bisa langsung dijalankan di VS Code menggunakan ekstensi **PlantUML** untuk melihat diagramnya. Jika ada yang perlu diperbaiki, beri tahu saya!
+

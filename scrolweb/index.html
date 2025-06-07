@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Travel Explore</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home" class="scroll-link">Home</a></li>
+                <li><a href="#services" class="scroll-link">Services</a></li>
+                <li><a href="#gallery" class="scroll-link">Gallery</a></li>
+                <li><a href="#testimonials" class="scroll-link">Testimonials</a></li>
+                <li><a href="#contact" class="scroll-link">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section id="home" class="banner">
+        <div class="slider">
+            <img src="https://source.unsplash.com/1200x600/?travel,nature" alt="Travel Image 1">
+            <img src="https://source.unsplash.com/1200x600/?adventure,mountains" alt="Travel Image 2">
+            <img src="https://source.unsplash.com/1200x600/?beach,vacation" alt="Travel Image 3">
+        </div>
+    </section>
+    
+    <section id="services">
+        <h2>Our Services</h2>
+        <p>We offer amazing travel experiences, including guided tours, custom packages, and adventure trips.</p>
+    </section>
+    
+    <section id="gallery">
+        <h2>Gallery</h2>
+        <div class="image-grid">
+            <img src="https://source.unsplash.com/400x300/?city,travel" alt="Gallery Image 1">
+            <img src="https://source.unsplash.com/400x300/?nature,hiking" alt="Gallery Image 2">
+            <img src="https://source.unsplash.com/400x300/?ocean,boat" alt="Gallery Image 3">
+        </div>
+    </section>
+
+    <!-- Wave Divider -->
+<div class="wave-divider">
+    <svg viewBox="0 0 1440 320">
+        <path fill="#121212" fill-opacity="1"
+            d="M0,192L48,186.7C96,181,192,171,288,165.3C384,160,480,160,576,165.3C672,171,768,181,864,181.3C960,181,1056,171,1152,176C1248,181,1344,203,1392,213.3L1440,224L1440,320L0,320Z">
+        </path>
+    </svg>
+</div>
+    
+    <section id="testimonials">
+        <h2>What Our Clients Say</h2>
+        <p>"An amazing experience! Highly recommended." - John Doe</p>
+        <p>"The best trip of my life!" - Jane Smith</p>
+    </section>
+    
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p>Email: contact@travelexplore.com</p>
+        <p>Phone: +123 456 7890</p>
+    </section>
+    
+    <footer>
+        <p>&copy; 2025 Travel Explore. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    let currentIndex = 0;
+    const images = document.querySelectorAll(".slider img");
+    const totalImages = images.length;
+    
+    function changeImage() {
+        images.forEach((img, index) => {
+            img.style.opacity = index === currentIndex ? "1" : "0";
+        });
+        currentIndex = (currentIndex + 1) % totalImages;
+    }
+    
+    setInterval(changeImage, 3000);
+    
+    // Smooth scrolling for navigation links
+    document.querySelectorAll("nav ul li a").forEach(anchor => {
+        anchor.addEventListener("click", function (event) {
+            event.preventDefault();
+            const targetId = this.getAttribute("href").substring(1);
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                window.scrollTo({
+                    top: targetSection.offsetTop - 60,
+                    behavior: "smooth"
+                });
+            }
+        });
+    });
+
+    // Highlight active section in navbar
+    window.addEventListener("scroll", function () {
+        let scrollPosition = window.scrollY + 65;
+        document.querySelectorAll("section").forEach(section => {
+            if (
+                scrollPosition >= section.offsetTop &&
+                scrollPosition < section.offsetTop + section.offsetHeight
+            ) {
+                document.querySelectorAll("nav ul li a").forEach(link => {
+                    link.classList.remove("active");
+                    if (link.getAttribute("href").substring(1) === section.id) {
+                        link.classList.add("active");
+                    }
+                });
+            }
+        });
+    });
+
+    // Replace images with new local paths
+    const sliderImages = [
+        "/img/marah.jpg",
+        "/img/eren.jpg",
+        "/img/otho ai.jpg"
+    ];
+    
+    images.forEach((img, index) => {
+        img.src = sliderImages[index] || sliderImages[0];
+    });
+});
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+    let currentIndex = 0;
+    const images = document.querySelectorAll(".slider img");
+    const totalImages = images.length;
+    
+    function changeImage() {
+        images.forEach((img, index) => {
+            img.style.opacity = index === currentIndex ? "1" : "0";
+        });
+        currentIndex = (currentIndex + 1) % totalImages;
+    }
+    
+    setInterval(changeImage, 3000);
+    
+    // Smooth scrolling for navigation links
+    document.querySelectorAll("nav ul li a").forEach(anchor => {
+        anchor.addEventListener("click", function (event) {
+            event.preventDefault();
+            const targetId = this.getAttribute("href").substring(1);
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                window.scrollTo({
+                    top: targetSection.offsetTop - 60,
+                    behavior: "smooth"
+                });
+            }
+        });
+    });
+
+    // Highlight active section in navbar
+    window.addEventListener("scroll", function () {
+        let scrollPosition = window.scrollY + 65;
+        document.querySelectorAll("section").forEach(section => {
+            if (
+                scrollPosition >= section.offsetTop &&
+                scrollPosition < section.offsetTop + section.offsetHeight
+            ) {
+                document.querySelectorAll("nav ul li a").forEach(link => {
+                    link.classList.remove("active");
+                    if (link.getAttribute("href").substring(1) === section.id) {
+                        link.classList.add("active");
+                    }
+                });
+            }
+        });
+    });
+});
+
+    </script>
+</body>
+</html>

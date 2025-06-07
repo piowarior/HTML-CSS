@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Fungsi Polinomial</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        label, select, input { margin-bottom: 10px; display: block; }
+    </style>
+</head>
+<body>
+
+    <h2>Pilih Fungsi Polinomial</h2>
+    
+    <!-- Dropdown untuk memilih fungsi -->
+    <form id="fungsiForm" action="proses.php" method="POST">
+        <label for="fungsiPolinomial">Jenis Fungsi:</label>
+        <select id="fungsiPolinomial" name="fungsi" onchange="tampilkanInput()">
+            <option value="linear">Linear (y = ax + b)</option>
+            <option value="kuadratik">Kuadratik (y = ax² + bx + c)</option>
+            <option value="kubik">Kubik (y = ax³ + bx² + cx + d)</option>
+            <option value="kuartik">Kuartik (y = ax⁴ + bx³ + cx² + dx + e)</option>
+            <option value="kuintik">Kuintik (y = ax⁵ + bx⁴ + cx³ + dx² + ex + f)</option>
+            <option value="pangkat_n">Pangkat Umum (y = axⁿ)</option>
+        </select>
+    
+        <div id="inputContainer"></div>
+    
+        <label for="x_min">Masukkan batas bawah x:</label>
+        <input type="number" id="x_min" name="x_min" value="0">
+    
+        <label for="x_max">Masukkan batas atas x:</label>
+        <input type="number" id="x_max" name="x_max" value="1">
+    
+        <label for="jumlah_titik">Jumlah titik sampel:</label>
+        <input type="number" id="jumlah_titik" name="jumlah_titik" value="50">
+    
+        <label for="rotasi">Putar terhadap sumbu:</label>
+        <select id="rotasi" name="rotasi">
+            <option value="x">Sumbu X</option>
+            <option value="y">Sumbu Y</option>
+        </select>
+    
+        <button type="submit">Kirim Data</button>
+    </form>
+    
+
+    <script>
+        function tampilkanInput() {
+            const jenis = document.getElementById("fungsiPolinomial").value;
+            const container = document.getElementById("inputContainer");
+            container.innerHTML = ""; // Reset inputan
+
+            let jumlahKoefisien = 0;
+            let labelKoefisien = [];
+
+            switch (jenis) {
+                case "linear":
+                    jumlahKoefisien = 2;
+                    labelKoefisien = ["a", "b"];
+                    break;
+                case "kuadratik":
+                    jumlahKoefisien = 3;
+                    labelKoefisien = ["a", "b", "c"];
+                    break;
+                case "kubik":
+                    jumlahKoefisien = 4;
+                    labelKoefisien = ["a", "b", "c", "d"];
+                    break;
+                case "kuartik":
+                    jumlahKoefisien = 5;
+                    labelKoefisien = ["a", "b", "c", "d", "e"];
+                    break;
+                case "kuintik":
+                    jumlahKoefisien = 6;
+                    labelKoefisien = ["a", "b", "c", "d", "e", "f"];
+                    break;
+                case "pangkat_n":
+                    jumlahKoefisien = 2; // a dan n (pangkat)
+                    labelKoefisien = ["a", "n"];
+                    break;
+            }
+
+            // Tambahkan input sesuai jumlah koefisien
+            for (let i = 0; i < jumlahKoefisien; i++) {
+                const label = document.createElement("label");
+                label.textContent = `Masukkan nilai ${labelKoefisien[i]}:`;
+                const input = document.createElement("input");
+                input.type = "number";
+                input.id = labelKoefisien[i];
+                input.name = labelKoefisien[i];
+
+                container.appendChild(label);
+                container.appendChild(input);
+            }
+        }
+
+        const form = document.getElementById("fungsiForm");
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    const formData = new FormData(form);
+    const data = {};
+    formData.forEach((value, key) => { data[key] = value; });
+    
+    localStorage.setItem("polynomialData", JSON.stringify(data));
+    window.location.href = "index.html";
+});
+
+        // Panggil saat pertama kali agar input tampil langsung
+        tampilkanInput();
+    </script>
+
+</body>
+</html>

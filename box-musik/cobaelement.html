@@ -22,34 +22,59 @@
     </div>
     
     <script>
-        const audio = document.getElementById('audio');
-        const ball = document.querySelector('.progress-ball');
-        let isPlaying = false;
-        
-        function togglePlay() {
-            if (isPlaying) {
-                audio.pause();
-            } else {
-                audio.play();
-            }
-            isPlaying = !isPlaying;
-        }
-        
-        audio.addEventListener('timeupdate', () => {
-            if (!audio.duration) return;
-            const progress = (audio.currentTime / audio.duration) * 360;
-            ball.style.transform = `translate(-50%, -50%) rotate(${progress}deg) translate(70px) rotate(${progress}deg)`;
-        });
+       const audio = document.getElementById('audio');
+const ball = document.querySelector('.progress-ball');
+const progressContainer = document.querySelector('.progress-container');
 
-        // Memastikan audio dimuat dengan benar
-        audio.addEventListener('canplaythrough', () => {
-            console.log('Audio is ready to play');
-        });
+let isPlaying = false;
+let isDragging = false;
+const radius = 70; // Radius lingkaran untuk bola
+const centerX = progressContainer.offsetLeft + progressContainer.offsetWidth / 2;
+const centerY = progressContainer.offsetTop + progressContainer.offsetHeight / 2;
 
-        // Menangani error audio
-        audio.addEventListener('error', (e) => {
-            console.error('Error playing audio', e);
-        });
+function togglePlay() {
+    if (isPlaying) {
+        audio.pause();
+    } else {
+        audio.play();
+    }
+    isPlaying = !isPlaying;
+}
+
+audio.addEventListener('timeupdate', () => {
+    if (!audio.duration || isDragging) return;
+    const progress = (audio.currentTime / audio.duration) * 360;
+    updateBallPosition(progress);
+});
+
+function updateBallPosition(degrees) {
+    const angle = (degrees - 90) * (Math.PI / 180);
+    const x = centerX + radius * Math.cos(angle);
+    const y = centerY + radius * Math.sin(angle);
+    ball.style.transform = `translate(-50%, -50%) translate(${x - centerX}px, ${y - centerY}px)`;
+}
+
+ball.addEventListener('mousedown', (event) => {
+    event.preventDefault();
+    isDragging = true;
+});
+
+document.addEventListener('mousemove', (event) => {
+    if (!isDragging) return;
+
+    const dx = event.clientX - centerX;
+    const dy = event.clientY - centerY;
+    let angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+    if (angle < 0) angle += 360;
+
+    updateBallPosition(angle);
+    audio.currentTime = (angle / 360) * audio.duration;
+});
+
+document.addEventListener('mouseup', () => {
+    isDragging = false;
+});
+
     </script>
 </body>
 </html>

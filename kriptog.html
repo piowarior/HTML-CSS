@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AES Encryptor (Demo) — Mode & Padding</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;max-width:980px;margin:24px auto;padding:16px}
+    label{display:block;margin-top:12px;font-weight:600}
+    textarea,input,select{width:100%;padding:8px;margin-top:6px;border:1px solid #ccc;border-radius:6px}
+    .row{display:flex;gap:12px}
+    .col{flex:1}
+    button{margin-top:12px;padding:10px 14px;border-radius:8px;border:none;background:#2563eb;color:#fff;font-weight:700}
+    pre{background:#0b1220;color:#e6eef8;padding:12px;border-radius:8px;overflow:auto}
+    .small{font-size:0.9rem;color:#444}
+    .inline{display:inline-block;margin-right:8px}
+  </style>
+</head>
+<body>
+  <h1>AES Encryptor — Mode & Padding Demo</h1>
+  <p class="small">Demo sederhana menggunakan CryptoJS. Pilih mode (CBC/ECB) dan padding (Pkcs7, ZeroPadding, NoPadding). Gunakan kunci 16 byte (128-bit) dalam format teks atau heks. Tombol <strong>"Tampilkan Blok & Padding"</strong> akan menampilkan bagaimana plaintext dipad ke blok 16 byte menurut padding yang dipilih.</p>
+
+  <label>Plaintext (ASCII)</label>
+  <textarea id="plaintext" rows="3">RTYOMNIASINECUFRTOI</textarea>
+
+  <div class="row">
+    <div class="col">
+      <label>Key (16 bytes) — teks</label>
+      <input id="keyText" placeholder="Contoh: mysecretkey12345" value="mysecretkey12345" />
+    </div>
+    <div class="col">
+      <label>atau Key (hex, 32 hex chars)</label>
+      <input id="keyHex" placeholder="Contoh: 00112233445566778899aabbccddeeff" />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <label>Mode</label>
+      <select id="modeSelect">
+        <option value="CBC">CBC</option>
+        <option value="ECB">ECB</option>
+      </select>
+    </div>
+    <div class="col">
+      <label>Padding</label>
+      <select id="paddingSelect">
+        <option value="Pkcs7">PKCS#7</option>
+        <option value="ZeroPadding">ZeroPadding</option>
+        <option value="NoPadding">NoPadding</option>
+      </select>
+    </div>
+  </div>
+
+  <label>IV (hex, 32 hex chars) — hanya untuk CBC</label>
+  <input id="ivHex" placeholder="Contoh: 000102030405060708090a0b0c0d0e0f" />
+
+  <div style="display:flex;gap:12px">
+    <button id="encryptBtn">Encrypt</button>
+    <button id="decryptBtn">Decrypt</button>
+    <button id="showStateBtn">Tampilkan State Blok 1</button>
+    <button id="showPaddingBtn">Tampilkan Blok & Padding</button>
+  </div>
+
+  <label>Hasil (Hex)</label>
+  <pre id="outputHex"></pre>
+
+  <label>Hasil (Base64)</label>
+  <pre id="outputB64"></pre>
+
+  <label>Catatan / Log</label>
+  <pre id="log"></pre>
+
+  <script>
+  // Utilities
+  function hexToWordArray(hex) { return CryptoJS.enc.Hex.parse(hex); }
+  function textToWordArray(text) { return CryptoJS.enc.Utf8.parse(text); }
+  function wordArrayToHex(wordArray) { return CryptoJS.enc.Hex.stringify(wordArray).toUpperCase(); }
+  function wordArrayToBase64(wordArray) { return CryptoJS.enc.Base64.stringify(wordArray); }
+
+  function ensureKey() {
+    const keyHex = document.getElementById('keyHex').value.trim();
+    const keyText = document.getElementById('keyText').value;
+    if (keyHex) return hexToWordArray(keyHex);
+    let words = textToWordArray(keyText);
+    const hex = CryptoJS.enc.Hex.stringify(words);
+    let h = hex;
+    if (h.length > 32) h = h.slice(0,32);
+    while (h.length < 32) h += '00';
+    return hexToWordArray(h);
+  }
+
+  function getPadding(name) {
+    switch(name) {
+      case 'Pkcs7': return CryptoJS.pad.Pkcs7;
+      case 'ZeroPadding': return CryptoJS.pad.ZeroPadding;
+      case 'NoPadding': return CryptoJS.pad.NoPadding;
+      default: return CryptoJS.pad.Pkcs7;
+    }
+  }
+  function getMode(name) {
+    switch(name) {
+      case 'CBC': return CryptoJS.mode.CBC;
+      case 'ECB': return CryptoJS.mode.ECB;
+      default: return CryptoJS.mode.CBC;
+    }
+  }
+
+  function log(msg){
+    const l = document.getElementById('log');
+    l.textContent = msg;
+  }
+
+  document.getElementById('encryptBtn').addEventListener('click', ()=>{
+    const pt = document.getElementById('plaintext').value;
+    const key = ensureKey();
+    const modeName = document.getElementById('modeSelect').value;
+    const paddingName = document.getElementById('paddingSelect').value;
+    const ivHex = document.getElementById('ivHex').value.trim();
+
+    const cfg = { mode: getMode(modeName), padding: getPadding(paddingName) };
+    if (modeName === 'CBC') {
+      if (ivHex.length === 32) cfg.iv = hexToWordArray(ivHex);
+      else cfg.iv = CryptoJS.lib.WordArray.random(16);
+    }
+
+    try{
+      const encrypted = CryptoJS.AES.encrypt(String(pt), key, cfg);
+      document.getElementById('outputHex').textContent = wordArrayToHex(encrypted.ciphertext);
+      document.getElementById('outputB64').textContent = encrypted.toString();
+      log('Encrypt OK — mode=' + modeName + ' padding=' + paddingName);
+    }catch(e){
+      log('Encrypt error: ' + e);
+    }
+  });
+
+  document.getElementById('decryptBtn').addEventListener('click', ()=>{
+    const cipherB64 = document.getElementById('outputB64').textContent.trim();
+    const key = ensureKey();
+    const modeName = document.getElementById('modeSelect').value;
+    const paddingName = document.getElementById('paddingSelect').value;
+    const ivHex = document.getElementById('ivHex').value.trim();
+
+    const cfg = { mode: getMode(modeName), padding: getPadding(paddingName) };
+    if (modeName === 'CBC') {
+      if (ivHex.length === 32) cfg.iv = hexToWordArray(ivHex);
+      else { log('IV missing or invalid for CBC — cannot decrypt reliably.'); return; }
+    }
+
+    try{
+      const decrypted = CryptoJS.AES.decrypt(cipherB64, key, cfg);
+      document.getElementById('plaintext').value = CryptoJS.enc.Utf8.stringify(decrypted);
+      log('Decrypt OK');
+    }catch(e){ log('Decrypt error: ' + e); }
+  });
+
+  // 🔹 NEW: Tampilkan blok + padding dalam bentuk matriks 4x4
+  document.getElementById('showStateBtn').addEventListener('click', ()=>{
+    const pt = document.getElementById('plaintext').value;
+    const paddingName = document.getElementById('paddingSelect').value;
+
+    const encoder = new TextEncoder();
+    let bytes = Array.from(encoder.encode(pt));
+
+    const padLen = 16 - (bytes.length % 16);
+    if (paddingName === 'Pkcs7') {
+      for (let i = 0; i < padLen; i++) bytes.push(padLen);
+    } else if (paddingName === 'ZeroPadding') {
+      for (let i = 0; i < padLen; i++) bytes.push(0);
+    } else if (paddingName === 'NoPadding') {
+      if (bytes.length % 16 !== 0) {
+        log('⚠️ Panjang plaintext bukan kelipatan 16 — NoPadding tidak valid.');
+        return;
+      }
+    }
+
+    const blockCount = Math.ceil(bytes.length / 16);
+    let out = `Total blok: ${blockCount} (masing-masing 16 byte)\n\n`;
+
+    for (let b = 0; b < blockCount; b++) {
+      const block = bytes.slice(b*16, (b+1)*16);
+      const hexBlock = block.map(x => ('0' + x.toString(16)).slice(-2).toUpperCase());
+      out += `Blok ${b+1} (${hexBlock.join(' ')})\n`;
+      out += `State matrix 4×4 (kolom per kolom):\n`;
+      for (let r = 0; r < 4; r++) {
+        let row = '';
+        for (let c = 0; c < 4; c++) {
+          row += hexBlock[4*c + r] + ' ';
+        }
+        out += row.trim() + '\n';
+      }
+      out += '\n';
+    }
+
+    log(out);
+  });
+
+  document.getElementById('ivHex').value = '000102030405060708090A0B0C0D0E0F';
+</script>
+
+
+  <footer style="margin-top:20px;color:#666;font-size:0.9rem">Note: CryptoJS uses PKCS#7 by default. Ini demo edukasi — jangan dipakai untuk data sensitif tanpa proteksi lebih lanjut.</footer>
+</body>
+</html>

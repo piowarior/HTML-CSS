@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DES - Expansion & XOR Subkunci</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f2f4f8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    .container {
+      background: white;
+      margin: 30px 10px;
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 700px;
+      width: 100%;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    label {
+      font-weight: bold;
+      color: #444;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    button {
+      padding: 10px 16px;
+      background: #0056b3;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #003d82;
+    }
+    pre {
+      background: #f8f8f8;
+      padding: 10px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 14px;
+      color: #333;
+    }
+    .result {
+      background: #fafafa;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .step-title {
+      color: #004b91;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>DES — Expansion E(R0) & XOR dengan Subkunci</h2>
+
+    <label for="r0">R0 (32-bit hex, contoh: F0AAF0AA)</label>
+    <input type="text" id="r0" value="F0AAF0AA">
+
+    <label for="key">Subkunci ronde 1 (48-bit hex, contoh: 1B02EFFC7072)</label>
+    <input type="text" id="key" value="1B02EFFC7072">
+
+    <div style="text-align:center;">
+      <button onclick="hitungExpansion()">Hitung E(R0)</button>
+      <button onclick="hitungXOR()">Hitung XOR</button>
+    </div>
+
+    <div id="output" class="result"></div>
+  </div>
+
+  <script>
+    // Tabel Expansion DES (E)
+    const E_TABLE = [
+      32, 1, 2, 3, 4, 5,
+       4, 5, 6, 7, 8, 9,
+       8, 9,10,11,12,13,
+      12,13,14,15,16,17,
+      16,17,18,19,20,21,
+      20,21,22,23,24,25,
+      24,25,26,27,28,29,
+      28,29,30,31,32,1
+    ];
+
+    let expandedHex = "";
+
+    function hexToBin(hex) {
+      return hex.split('').map(h => parseInt(h,16).toString(2).padStart(4,'0')).join('');
+    }
+
+    function binToHex(bin) {
+      return bin.match(/.{1,4}/g).map(b => parseInt(b,2).toString(16).toUpperCase()).join('');
+    }
+
+    function xorBin(b1,b2){
+      return b1.split('').map((bit,i)=>bit===b2[i]?'0':'1').join('');
+    }
+
+    function hitungExpansion(){
+      const r0 = document.getElementById("r0").value.trim().toUpperCase();
+      const bin = hexToBin(r0);
+
+      // Terapkan tabel ekspansi E
+      let expanded = E_TABLE.map(i => bin[i-1]).join('');
+      expandedHex = binToHex(expanded).padStart(12,'0');
+
+      document.getElementById("output").innerHTML = `
+      <div class="step-title">Langkah 1 — Hasil Expansion E(R0):</div>
+      <b>Input R0 (hex):</b> ${r0}<br><br>
+      <b>R0 dalam biner (32-bit):</b>
+      <pre>${bin.match(/.{1,8}/g).join(' ')}</pre>
+      <b>Terapkan tabel ekspansi E (48-bit hasil):</b>
+      <pre>${expanded.match(/.{1,6}/g).join(' ')}</pre>
+      <b>Hasil E(R0) dalam hex (48-bit):</b> ${expandedHex}
+      `;
+    }
+
+    function hitungXOR(){
+      const key = document.getElementById("key").value.trim().toUpperCase();
+      if(!expandedHex){
+        alert("Hitung dulu E(R0) sebelum melakukan XOR!");
+        return;
+      }
+
+      const eBin = hexToBin(expandedHex).padStart(48,'0');
+      const kBin = hexToBin(key).padStart(48,'0');
+      const xorResult = xorBin(eBin, kBin);
+      const xorHex = binToHex(xorResult).padStart(12,'0');
+
+      document.getElementById("output").innerHTML = `
+      <div class="step-title">Langkah 2 — Hasil XOR antara E(R0) dan Subkunci:</div>
+      <b>E(R0) hex:</b> ${expandedHex}<br>
+      <b>Subkunci ronde 1 (hex):</b> ${key}<br><br>
+      <b>E(R0) (biner 48-bit):</b>
+      <pre>${eBin.match(/.{1,6}/g).join(' ')}</pre>
+      <b>Subkunci (biner 48-bit):</b>
+      <pre>${kBin.match(/.{1,6}/g).join(' ')}</pre>
+      <b>Hasil XOR (E(R0) ⊕ Subkunci):</b>
+      <pre>${xorResult.match(/.{1,6}/g).join(' ')}</pre>
+      <b>Hasil XOR dalam hex (48-bit):</b> ${xorHex}
+      `;
+    }
+  </script>
+</body>
+</html>

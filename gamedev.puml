@@ -1,0 +1,71 @@
+@startuml
+title **Flowchart Alur Game - Simulator Bencana**
+
+skinparam backgroundColor #F8FAFF
+skinparam defaultFontName Arial
+skinparam node {
+    BackgroundColor White
+    BorderColor #000000
+}
+skinparam activity {
+    BackgroundColor #E3F2FD
+    BorderColor #1565C0
+}
+skinparam actorStyle awesome
+
+start
+
+:'**Menu Utama**';
+if ("Pilih Menu?") then (Mulai Game)
+    :Tampilkan Intro / Cutscene;
+else if (Panduan)
+    :Tampilkan Panduan Kontrol & SOP;
+    back to start
+else (Keluar)
+    stop
+endif
+
+:'**Briefing Misi**';
+:Terima Laporan Bencana\n(Jenis, Lokasi, Korban, Risiko);
+:Petunjuk & Rekomendasi Peralatan;
+
+:'**Persiapan Tim (Loadout)**';
+:Player Memilih Peralatan\n(Tali, P3K, Pelampung, dll);
+if ("Loadout Lengkap?") then (Ya)
+    :Menuju Lokasi Bencana;
+else (Tidak)
+    :Tampil Peringatan:\n"Peralatan Tidak Lengkap!";
+    back to '**Persiapan Tim (Loadout)**'
+endif
+
+:'**Operasi Penyelamatan**';
+repeat
+    :Eksplorasi Area Bencana;
+    :Temukan Korban;
+    if ("Alat Sesuai?") then (Ya)
+        :Lakukan Penyelamatan\n(Evakuasi / Triage);
+    else (Tidak)
+        :Pesan: "Butuh Alat Tambahan!";
+        :Cari / Ambil Alat Lain;
+    endif
+repeat while (Masih Ada Korban?) is (Ya)
+
+:'**Penyelesaian Misi**';
+if ("Objektif Tercapai?") then (Ya)
+    :Misi Selesai Berhasil;
+else (Tidak)
+    :Waktu Habis / Korban Tidak Terselamatkan;
+endif
+
+:'**Evaluasi & Skor**';
+:Hitung Bintang (★1–★3)\nWaktu, SOP, Jumlah Korban;
+:Feedback Edukatif:\n"SOP Penyelamatan Seharusnya...";
+
+if ("Lanjut Stage?") then (Ya)
+    :Buka Chapter / Level Berikutnya;
+    back to '**Briefing Misi**'
+else (Tidak)
+    stop
+endif
+
+@enduml

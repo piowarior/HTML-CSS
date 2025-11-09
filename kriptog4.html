@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>AES ShiftRows Visualizer (Perbaikan)</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f7f9fc;
+        padding: 30px;
+        color: #333;
+    }
+    h2 { color: #1f4e79; }
+    input { width: 500px; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; font-family: monospace; }
+    button { padding: 8px 16px; border: none; background-color: #1f78c1; color: white; font-weight: bold; border-radius: 5px; cursor: pointer; margin-left: 10px; }
+    button:hover { background-color: #145a8a; }
+    table { border-collapse: collapse; margin-top: 20px; background-color: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    td, th { border: 1px solid #999; padding: 10px 14px; text-align: center; font-family: monospace; }
+    th { background-color: #1f4e79; color: white; }
+    .formula { margin-top: 25px; background: #e8f0fe; padding: 15px; border-left: 6px solid #1f78c1; border-radius: 5px; }
+    .formula pre { background: #dce6f1; padding: 10px; border-radius: 5px; overflow-x: auto; }
+</style>
+</head>
+<body>
+<h2>AES ShiftRows Visualizer (Perbaikan)</h2>
+
+<p>Masukkan 16 byte hasil SubBytes dalam heks (dipisah spasi):</p>
+<input type="text" id="subBytesInput" value="B6 4D 41 D6 E5 E1 AE B8 29 14 39 01 CB 94 BD 9F">
+<button onclick="applyShiftRows()">Terapkan ShiftRows</button>
+
+<h3>Hasil ShiftRows (state 4×4):</h3>
+<table id="shiftRowsTable"></table>
+
+<div class="formula">
+<h3>Rumus ShiftRows:</h3>
+<p>ShiftRows menggeser byte di setiap baris state 4×4 ke kiri:</p>
+<ul>
+    <li>Baris 0: tidak digeser</li>
+    <li>Baris 1: digeser 1 byte ke kiri</li>
+    <li>Baris 2: digeser 2 byte ke kiri</li>
+    <li>Baris 3: digeser 3 byte ke kiri</li>
+</ul>
+<p>Rumus:</p>
+<pre>shifted[r][c] = matrix[r][(c + r) % 4]</pre>
+</div>
+
+<script>
+function applyShiftRows() {
+    // Ambil input heks dan pisah spasi
+    let input = document.getElementById("subBytesInput").value.trim().split(/\s+/);
+    if(input.length !== 16) {
+        alert("Input harus 16 byte heks!");
+        return;
+    }
+
+    // Konversi ke angka desimal
+    let state = input.map(b => parseInt(b,16));
+
+    // Buat matriks 4x4 row-per-row
+    let matrix = [
+        state.slice(0,4),   // Row 0
+        state.slice(4,8),   // Row 1
+        state.slice(8,12),  // Row 2
+        state.slice(12,16)  // Row 3
+    ];
+
+    // ShiftRows: geser setiap baris r sebanyak r byte ke kiri
+    let shifted = [[],[],[],[]];
+    for(let r=0; r<4; r++){
+        for(let c=0; c<4; c++){
+            shifted[r][c] = matrix[r][(c + r) % 4];
+        }
+    }
+
+    // Tampilkan tabel
+    let table = document.getElementById("shiftRowsTable");
+    let html = "<tr><th>Row/Col</th>";
+    for(let c=0; c<4; c++) html += "<th>Col "+c+"</th>";
+    html += "</tr>";
+
+    for(let r=0; r<4; r++){
+        html += "<tr><th>Row "+r+"</th>";
+        for(let c=0; c<4; c++){
+            html += "<td>" + shifted[r][c].toString(16).padStart(2,'0').toUpperCase() + "</td>";
+        }
+        html += "</tr>";
+    }
+    table.innerHTML = html;
+}
+</script>
+</body>
+</html>

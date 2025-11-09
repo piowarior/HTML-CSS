@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>AES MixColumns Visualizer (Satu Kolom)</title>
+<style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f7f9fc; padding:30px; color:#333; }
+    h2 { color:#1f4e79; }
+    input { width:200px; padding:6px; margin-bottom:10px; border:1px solid #ccc; border-radius:4px; font-family: monospace;}
+    button { padding:6px 12px; border:none; background:#1f78c1; color:white; font-weight:bold; border-radius:4px; cursor:pointer; margin-left:5px;}
+    button:hover { background:#145a8a; }
+    table { border-collapse: collapse; margin-top:15px; background:white; box-shadow:0 0 8px rgba(0,0,0,0.1);}
+    td, th { border:1px solid #999; padding:8px 12px; text-align:center; font-family: monospace; }
+    th { background:#1f4e79; color:white;}
+    .formula { margin-top:20px; background:#e8f0fe; padding:15px; border-left:6px solid #1f78c1; border-radius:5px;}
+    .formula pre { background:#dce6f1; padding:10px; border-radius:5px; overflow-x:auto;}
+</style>
+</head>
+<body>
+<h2>AES MixColumns Visualizer (Satu Kolom)</h2>
+
+<p>Masukkan 4 byte kolom hasil ShiftRows (hex, dipisah spasi, contoh: B6 E1 39 9F):</p>
+<input type="text" id="colInput" value="B6 E1 39 9F">
+<button onclick="calculateMixColumns()">Hitung MixColumns</button>
+
+<div id="mixResult"></div>
+
+<div class="formula">
+<h3>Rumus MixColumns:</h3>
+<p>Standar matriks perkalian AES (GF(2^8)):</p>
+<pre>
+|02 03 01 01|   |s0|
+|01 02 03 01| x |s1|
+|01 01 02 03|   |s2|
+|03 01 01 02|   |s3|
+</pre>
+<p>Perhitungan byte baru (misal c0 baru):</p>
+<pre>
+c0 = (02 • s0) ⊕ (03 • s1) ⊕ (01 • s2) ⊕ (01 • s3)
+c1 = (01 • s0) ⊕ (02 • s1) ⊕ (03 • s2) ⊕ (01 • s3)
+c2 = (01 • s0) ⊕ (01 • s1) ⊕ (02 • s2) ⊕ (03 • s3)
+c3 = (03 • s0) ⊕ (01 • s1) ⊕ (01 • s2) ⊕ (02 • s3)
+</pre>
+</div>
+
+<script>
+// Fungsi perkalian di GF(2^8)
+function xtime(a) { return ((a<<1) ^ ((a&0x80)?0x1b:0)) & 0xFF; }
+function mul(a,b) {
+    let res = 0;
+    for(let i=0;i<8;i++){
+        if(b & 1) res ^= a;
+        let hiBit = a & 0x80;
+        a = (a<<1) & 0xFF;
+        if(hiBit) a ^= 0x1b;
+        b >>=1;
+    }
+    return res;
+}
+
+function calculateMixColumns() {
+    let input = document.getElementById("colInput").value.trim().split(/\s+/).map(x=>parseInt(x,16));
+    if(input.length!==4){ alert("Input harus 4 byte hex!"); return; }
+    let s = input;
+
+    // Matriks MixColumns AES
+    let m = [
+        [2,3,1,1],
+        [1,2,3,1],
+        [1,1,2,3],
+        [3,1,1,2]
+    ];
+
+    // Hitung setiap byte baru
+    let c = [];
+    let stepsHTML = "<h3>Langkah-langkah Perhitungan:</h3><pre>";
+    for(let i=0;i<4;i++){
+        let line = `c${i} = `;
+        let val = 0;
+        for(let j=0;j<4;j++){
+            let prod = mul(m[i][j], s[j]);
+            val ^= prod;
+            line += `${m[i][j]}•${s[j].toString(16).toUpperCase()} = ${prod.toString(16).toUpperCase()} ⊕ `;
+        }
+        val &= 0xFF;
+        line = line.slice(0,-2); // hapus ⊕ terakhir
+        line += ` => ${val.toString(16).toUpperCase()}`;
+        stepsHTML += line + "\n";
+        c.push(val);
+    }
+    stepsHTML += "</pre>";
+
+    // Tampilkan matriks perkalian
+    let tableHTML = "<h3>Matriks Perkalian MixColumns:</h3><table><tr><th></th>";
+    for(let j=0;j<4;j++) tableHTML += `<th>s${j}</th>`;
+    tableHTML += "</tr>";
+    for(let i=0;i<4;i++){
+        tableHTML += `<tr><th>c${i}</th>`;
+        for(let j=0;j<4;j++){
+            tableHTML += `<td>${m[i][j]}</td>`;
+        }
+        tableHTML += "</tr>";
+    }
+    tableHTML += "</table>";
+
+    // Hasil akhir
+    let resultHTML = "<h3>Hasil Kolom Setelah MixColumns:</h3><pre>" + c.map(x=>x.toString(16).padStart(2,'0').toUpperCase()).join(" ") + "</pre>";
+
+    document.getElementById("mixResult").innerHTML = stepsHTML + tableHTML + resultHTML;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>AES AddRoundKey Calculator</title>
+<style>
+    body { font-family: Arial, sans-serif; padding: 20px; background-color: #f7f7f7; }
+    table { border-collapse: collapse; margin-top: 10px; }
+    td, th { border: 1px solid #333; padding: 8px; text-align: center; font-family: monospace; }
+    input { width: 400px; padding: 5px; margin-bottom: 10px; }
+    button { padding: 6px 12px; cursor: pointer; }
+</style>
+</head>
+<body>
+<h2>AES AddRoundKey (Blok 1)</h2>
+
+<label>Plaintext (16 byte hex, dipisahkan spasi):</label><br>
+<input id="plaintext" value="52 54 59 4F 4D 4E 49 41 53 49 4E 45 43 55 46 52"><br><br>
+
+<label>Key AES-128 (16 byte hex, dipisahkan spasi):</label><br>
+<input id="key" value="2B 7E 15 16 28 AE D2 A6 AB F7 15 88 09 CF 4F 3C"><br><br>
+
+<button onclick="calculateAddRoundKey()">Hitung AddRoundKey</button>
+
+<h3>Hasil Matriks 4×4 (Versi Biasa, Hex):</h3>
+<table id="resultTablePlain"></table>
+
+<h3>Hasil Matriks 4×4 (Versi Hex Lengkap: 0xXX):</h3>
+<table id="resultTableHex"></table>
+
+<script>
+function calculateAddRoundKey() {
+    const pt = document.getElementById("plaintext").value.trim().split(" ").map(x => parseInt(x, 16));
+    const key = document.getElementById("key").value.trim().split(" ").map(x => parseInt(x, 16));
+    const result = pt.map((b,i) => b ^ key[i]);
+
+    // Fungsi buat bikin tabel
+    function buildTable(tableId, show0x){
+        const table = document.getElementById(tableId);
+        table.innerHTML = "";
+
+        // header kolom
+        let header = document.createElement("tr");
+        header.appendChild(document.createElement("th"));
+        for(let c=0; c<4; c++){
+            let th = document.createElement("th");
+            th.innerText = "Col " + c;
+            header.appendChild(th);
+        }
+        table.appendChild(header);
+
+        // isi tabel 4x4
+        for(let row=0; row<4; row++){
+            const tr = document.createElement("tr");
+            const thRow = document.createElement("th");
+            thRow.innerText = "Row " + row;
+            tr.appendChild(thRow);
+
+            for(let col=0; col<4; col++){
+                const td = document.createElement("td");
+                let hex = result[col*4 + row].toString(16).padStart(2,'0').toUpperCase();
+                td.innerText = show0x ? "0x" + hex : hex;
+                tr.appendChild(td);
+            }
+            table.appendChild(tr);
+        }
+    }
+
+    // buat dua tabel
+    buildTable("resultTablePlain", false);
+    buildTable("resultTableHex", true);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<title>DES Initial Permutation (IP) Visualizer</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  body{font-family:Inter, "Segoe UI", Roboto, Arial; background:#f6f8fb; color:#111; padding:22px;}
+  h1{color:#0b57a4}
+  input{width:100%; padding:8px; font-family:monospace; font-size:14px; box-sizing:border-box}
+  button{background:#0b57a4;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;margin-top:8px}
+  .panel{background:#fff;padding:12px;border-radius:8px;box-shadow:0 6px 18px rgba(10,20,40,0.06);margin-top:14px}
+  pre{background:#0f1720;color:#e6eef8;padding:10px;border-radius:6px;overflow:auto}
+  table{border-collapse:collapse;width:100%}
+  th,td{border:1px solid #e2e8f0;padding:6px;text-align:center;font-family:monospace}
+  th{background:#eef6ff;color:#0b57a4}
+  .small{font-size:13px;color:#334155}
+  .muted{color:#475569}
+</style>
+</head>
+<body>
+  <h1>DES Initial Permutation (IP) Visualizer</h1>
+  <p class="small">Masukkan <strong>16 hex digit</strong> (64 bit) — contoh: <code>5254594F4D4E4941</code> (yang merepresentasikan "RTYOMNIA"). Kode ini menjalankan tabel IP standar DES, menampilkan hasil permutasi biner & heks, serta L0 | R0 (32-bit kiri & kanan).</p>
+
+  <div class="panel">
+    <label>Blok 64-bit (hex, 16 hex digits):</label>
+    <input id="hexInput" value="5254594F4D4E4941" maxlength="16" />
+    <button onclick="runIP()">Jalankan Initial Permutation (IP)</button>
+  </div>
+
+  <div id="output" class="panel" style="display:none"></div>
+
+<script>
+const IP = [
+  58,50,42,34,26,18,10,2,
+  60,52,44,36,28,20,12,4,
+  62,54,46,38,30,22,14,6,
+  64,56,48,40,32,24,16,8,
+  57,49,41,33,25,17,9,1,
+  59,51,43,35,27,19,11,3,
+  61,53,45,37,29,21,13,5,
+  63,55,47,39,31,23,15,7
+];
+
+function hexToBin64(hex) {
+  hex = hex.replace(/\s+/g,'');
+  if(hex.length !== 16) return null;
+  let bin = '';
+  for(let i=0;i<16;i++){
+    const v = parseInt(hex[i],16);
+    if(isNaN(v)) return null;
+    bin += v.toString(2).padStart(4,'0');
+  }
+  return bin;
+}
+
+function binToHex(binStr){
+  let out = '';
+  for(let i=0;i<binStr.length;i+=8){
+    const byte = binStr.slice(i,i+8);
+    out += parseInt(byte,2).toString(16).padStart(2,'0').toUpperCase();
+  }
+  return out;
+}
+
+function buildIPTable(){
+  let html = '<h3>Tabel Initial Permutation (IP) Standar DES</h3><table>';
+  for(let r=0;r<8;r++){
+    html += '<tr>';
+    for(let c=0;c<8;c++){
+      html += `<td>${IP[r*8 + c]}</td>`;
+    }
+    html += '</tr>';
+  }
+  html += '</table>';
+  return html;
+}
+
+function buildStepExplanation(){
+  return `
+    <h3>Metode Langkah-langkah IP</h3>
+    <ol class="small">
+      <li>Konversi input hex menjadi 64-bit biner.</li>
+      <li>Gunakan tabel IP untuk menentukan pemetaan bit: bit pada posisi output ke-i diambil dari posisi input ke-IP[i].</li>
+      <li>Susun hasilnya menjadi 64 bit baru sesuai urutan pemetaan tersebut.</li>
+      <li>Pisahkan hasil 64 bit menjadi dua bagian:
+        <ul>
+          <li><strong>L0</strong> = 32 bit pertama (kiri)</li>
+          <li><strong>R0</strong> = 32 bit terakhir (kanan)</li>
+        </ul>
+      </li>
+    </ol>
+  `;
+}
+
+function runIP(){
+  const hex = document.getElementById('hexInput').value.trim().replace(/0x/i,'');
+  const bin = hexToBin64(hex);
+  const outDiv = document.getElementById('output');
+  if(!bin){
+    outDiv.style.display='block';
+    outDiv.innerHTML = `<p class="muted">Input tidak valid — masukkan tepat 16 hex digit (0-9, A-F).</p>`;
+    return;
+  }
+
+  let ipBits = '';
+  let mappingRows = [];
+  for(let i=0;i<64;i++){
+    const srcIndex = IP[i]-1;
+    const bit = bin[srcIndex];
+    ipBits += bit;
+    mappingRows.push({outPos:i+1, inPos:IP[i], bit:bit});
+  }
+
+  const L0bits = ipBits.slice(0,32);
+  const R0bits = ipBits.slice(32,64);
+  const L0hex = binToHex(L0bits);
+  const R0hex = binToHex(R0bits);
+
+  let html = `<h3>Input (hex → biner)</h3>
+    <p class="small">Hex input: <code>${hex.toUpperCase()}</code></p>
+    <pre>${bin.match(/.{1,8}/g).join(' ')}</pre>`;
+
+  html += `<h3>Hasil Initial Permutation (IP)</h3>
+    <p class="small">Output (64 bit biner):</p>
+    <pre>${ipBits.match(/.{1,8}/g).join(' ')}</pre>
+    <p class="small">Output (64 bit hex): <code>${binToHex(ipBits)}</code></p>`;
+
+  html += `<h3>Hasil dipisah menjadi L0 | R0 (32-bit tiap sisi)</h3>
+    <table>
+      <tr><th></th><th>Bits (bin)</th><th>Hex (32-bit)</th></tr>
+      <tr><td><strong>L0 (left)</strong></td><td><code>${L0bits.match(/.{1,8}/g).join(' ')}</code></td><td><code>${L0hex}</code></td></tr>
+      <tr><td><strong>R0 (right)</strong></td><td><code>${R0bits.match(/.{1,8}/g).join(' ')}</code></td><td><code>${R0hex}</code></td></tr>
+    </table>`;
+
+  /* Tambahan: tampilkan tabel IP dan langkah-langkah sebelum contoh pemetaan */
+  html += buildIPTable();
+  html += buildStepExplanation();
+
+  html += `<h3>Contoh pemetaan beberapa bit (output bit ← input bit)</h3>
+    <table><tr><th>out#</th><th>in#</th><th>nilai bit</th></tr>`;
+  for(let i=0;i<64;i++){
+    html += `<tr><td>${mappingRows[i].outPos}</td><td>${mappingRows[i].inPos}</td><td>${mappingRows[i].bit}</td></tr>`;
+  }
+  html += `</table>`;
+
+  html += `<p class="small muted">Metode: IP menggunakan tabel standar DES. Untuk setiap posisi i (1..64), output bit i diambil dari input bit pada posisi IP[i]. Setelah permutasi, 32 bit pertama menjadi L0, dan 32 bit sisanya menjadi R0.</p>`;
+
+  outDiv.style.display='block';
+  outDiv.innerHTML = html;
+}
+</script>
+</body>
+</html>

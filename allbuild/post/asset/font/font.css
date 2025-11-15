@@ -1,3 +1,5 @@
+/* Myriad Pro */
+
 /* Black Italic */
 @font-face {
   font-family: 'MyriadPro';
@@ -36,4 +38,12 @@
   src: url('/allbuild/post/asset/font/Myriad Pro/Myriad Pro Italic.ttf') format('truetype');
   font-weight: 400;
   font-style: italic;
+}
+
+
+/* HUMANE */
+
+@font-face {
+  font-family: 'humane';
+  src: url('/rootallbuild/post/asset/font/HUMANE Typeface/OpenType-TT/Humane-Bold.ttf')
 }

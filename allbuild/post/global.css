@@ -1,0 +1,32 @@
+@import url('/allbuild/post/asset/font/fonts.css');
+
+
+
+html{
+    scroll-behavior: smooth;
+    overscroll-behavior: none;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.bagian-kepala{
+
+}
+
+.bagian-kepala ul{
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bagian-kepala ul li p{
+    margin: 10px;
+    font-family: 'MyriadPro';
+    color: #333333;
+ 
+}

@@ -1,25 +1,27 @@
 @import url('/allbuild/post/asset/font/fonts.css');
 
 
+
 html{
     scroll-behavior: smooth;
     overscroll-behavior: none;
 }
 
 body{
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
     background: url(/allbuild/post/asset/gambar/gambar\ latar\ belakang\ web\ post.jpg);
     background-size: cover;
 }
 
 .bagian{
-    padding: 0px 103px;
+    padding: 0px 98px;
 
 }
 
 
 .kepala ul{
+    padding-left: 0px;
     padding-top: 30px;
     list-style: none;
     display: flex;
@@ -29,7 +31,7 @@ body{
 .kepala ul li p{
     font-family: 'Myriad Pro';
     color: #333333;
-    font-weight: 200;
+    font-weight: 400;
     letter-spacing: 0.30em;
     font-size: 13px;
 }
@@ -38,6 +40,22 @@ body{
 
 .utama{
     height: 700px;
+    display: flex;
+    /* background-color: aqua; */
+}
+
+.utama-kiri{
+    width: 100px;
+    /* background-color: azure; */
+}
+
+.utama-kiri p{
+    background-color: red;
+    margin-top: 30px;
     
-    background-color: aqua;
+    font-size: 12;
+    font-weight: 400;
+    letter-spacing: 0.30em;
+    font-family: 'Myriad Pro';
+    
 }

@@ -1,6 +1,16 @@
 @import url('/allbuild/post/asset/font/fonts.css');
 
-
+img,
+.utama-kanan img,
+.bagian img {
+    -webkit-user-drag: none;
+    user-drag: none;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
 html{
     scroll-behavior: smooth;
@@ -71,10 +81,18 @@ body{
 }
 
 .utama-kanan h1{
+    position: relative;
     margin-top: -150px;
     font-family: Humane;
     font-size: 600px;
     color: white;
+
+}
+
+.utama-kanan h1::before{
+   content: '';
+   outline: 5px solid black;
+   color: black;
 
 }
 

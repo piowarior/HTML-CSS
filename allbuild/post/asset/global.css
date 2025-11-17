@@ -20,7 +20,7 @@ html{
 body{
     margin: 0px;
     padding: 0px;
-    background: url(/allbuild/post/asset/gambar/gambar\ latar\ belakang\ web\ post.jpg);
+    background: url(/allbuild/post/asset/gambar/gambar\ latar\ belakang\ web\ post.png);
     background-size: cover;
 }
 
@@ -28,7 +28,6 @@ body{
     padding: 0px 98px;
     
 }
-
 
 .kepala ul{
     padding-left: 0px;
@@ -40,7 +39,7 @@ body{
 
 .kepala ul li p{
     font-family: 'Myriad Pro';
-    color: #333333;
+    color: #4E4E4E;
     font-weight: 400;
     letter-spacing: 0.30em;
     font-size: 13px;
@@ -61,9 +60,10 @@ body{
     /* background-color: azure; */
 }
 
+
 .utama-kiri p{
     position: relative;
-    left: -5px;
+    left: -8px;
     margin: 30px 0px 0px 0px;
     font-size: 12px;
     font-weight: 400;
@@ -71,6 +71,16 @@ body{
     font-family: 'Myriad Pro';
     writing-mode: vertical-lr;
     
+    
+}
+
+.kotak1{
+    margin-top: 20px;
+    width: 10px;
+    height: 20px;
+    background-color: white;
+    position: relative;
+    left: -4px;
 }
 
 .utama-kanan{
@@ -78,26 +88,67 @@ body{
     justify-content: center;
     align-items: center;
     width: 100%;
+    /* background-color: aquamarine; */
 }
 
 .utama-kanan h1{
     position: relative;
     margin-top: -150px;
+    margin-left: -100px;
     font-family: Humane;
     font-size: 600px;
+    font-weight: 600;
     color: white;
 
 }
 
-.utama-kanan h1::before{
-   content: '';
-   outline: 5px solid black;
-   color: black;
-
-}
 
 .utama-kanan img{
     position: absolute;
     width: 650px;
     bottom: 0px;
+    pointer-events: none;
+}
+
+
+/* bagian tengah1 */
+
+.tengah1{
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    height: 155px;
+    gap: 510px;
+}
+
+.tengah1 ul{
+    list-style: none;
+    display: flex;
+    gap: 100px;
+    padding: 0px;
+}
+
+/* .tengah1-kanan{
+    background-color: coral;
+    padding: 0px;
+}
+
+.tengah1-kiri{
+    background-color: aqua;
+} */
+
+.tengah1 ul li a{
+    
+    text-decoration: none;
+    color: #4E4E4E;
+    font-size: 20px;
+    letter-spacing: 0.28em;
+    font-weight: 500;
+}
+
+.tengah1 ul li a:hover{
+    color: rgb(255, 255, 255);
+    position: relative;
+    top: -5px;
+    transition: all 0.3s ease;
 }

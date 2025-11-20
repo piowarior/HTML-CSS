@@ -1,3 +1,4 @@
+
 /* Myriad Pro */
 
 /* Black Italic */
@@ -40,19 +41,18 @@
   font-style: italic;
 }
 
-
 /* HUMANE */
 
 @font-face {
   font-family: 'humane';
-  src: url('/rootallbuild/post/asset/font/HUMANE Typeface/OpenType-TT/Humane-Medium.ttf');
+  src: url('/allbuild/post/asset/font/HUMANE Typeface/OpenType-TT/Humane-Medium.ttf');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'humane';
-  src: url('/rootallbuild/post/asset/font/HUMANE Typeface/OpenType-TT/Humane-Bold.ttf');
+  src: url('/allbuild/post/asset/font/HUMANE Typeface/OpenType-TT/Humane-Bold.ttf');
   font-weight: 700;
   font-style: normal;
 }

@@ -1,10 +1,10 @@
-@import url('/allbuild/post/asset/font/fonts.css');
+@import url('/allbuild/post/asset/font/font.css');
 
 img,
 .utama-kanan img,
 .bagian img {
     -webkit-user-drag: none;
-    user-drag: none;
+   
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -20,9 +20,11 @@ html{
 body{
     margin: 0px;
     padding: 0px;
-    background: url(/allbuild/post/asset/gambar/gambar\ latar\ belakang\ web\ post.png);
+    background: url(/allbuild/post/asset/gambar/gambar-background.png)no-repeat;
     background-size: cover;
+    background-color: #E9E5E2;
 }
+
 
 .bagian{
     padding: 0px 98px;
@@ -55,8 +57,6 @@ body{
 
 .utama-kiri{
     width: 100px;
-    
-
     /* background-color: azure; */
 }
 
@@ -78,7 +78,7 @@ body{
     margin-top: 20px;
     width: 10px;
     height: 20px;
-    background-color: white;
+    background-color: rgb(2, 1, 1);
     position: relative;
     left: -4px;
 }

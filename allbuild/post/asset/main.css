@@ -1,0 +1,76 @@
+@import url('/allbuild/post/asset/font/font.css');
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+    margin: 0px;
+    padding: 0px;
+    background-color: white;
+}
+
+.bagian{
+    padding: 0px 98px;
+}
+
+.kepala{
+    width: 100%;
+    padding-top: 40px;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    
+}
+
+.kepala ul{
+    display: flex;
+    gap: 200px;
+    list-style: none;
+}
+
+.kepala ul li a{
+    text-decoration: none;
+    font-family: 'Myriad Pro';
+    letter-spacing: 0.30em;
+    font-weight: 400;
+    color: white;
+}
+
+.utama{
+    width: 100vw;
+    height: 800px;
+    background: url(/allbuild/post/asset/gambar/latar\ belakang\ buku.png);
+    background-size: cover;
+    border-radius: 0px 0px 40px 40px;
+    display: grid;
+    align-items: center;
+}
+
+.utama h1{
+    width: 855px;
+    font-size: 100px;
+    font-weight: 500;
+    margin-top: 0px;
+    margin-left: 100px;
+    color: white;
+    font-family: 'Myriad Pro';
+
+}
+
+.utama svg{
+    margin-top: -250px;
+    margin-left: 100px;
+}
+
+.utama span{
+    margin-top: -450px;
+    width: 590px;
+    font-family: 'Myriad Pro';
+    color: white;
+    margin-left: 98px;
+    font-size: 20px;
+    font-weight: 400;
+}
+

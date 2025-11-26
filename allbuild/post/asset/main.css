@@ -323,8 +323,17 @@ body{
 .postingan-utama{
     width: 650px;
     height: 800px;
-    background-color: red;
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,10),   /* bagian BAWAH (gelap) */
+        rgba(0,0,0,0.6),   /* bagian tengah semi transparan */
+        rgba(0,0,0,0.0)    /* bagian atas transparan */
+    );
     border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    /* align-items: center; */
 }
 
 .postingan-utama h1{
@@ -339,22 +348,70 @@ body{
     flex-direction: column;
     /* align-items: center; */
     margin-left: 35px;
+    color: #FFFFFF;
 }
 
-.postingan-utama h2{
-    font-family: 'Humane';
-    font-size: 80px;
-    font-weight: 700;
-    letter-spacing: 0.03em;
+.judul-post{
     flex: 1;
-    /* margin-top: 23px; */
-    /* height: 110px; */
+    /* background-color: green; */
     display: flex;
     justify-content: end;
-    flex-direction: column; 
-    align-items: center; 
-    margin-left: 35px;
+    flex-direction: column;
+    align-items: end;
+    text-align: right;
 }
+
+.judul-post h2{
+    font-size: 50px;
+    font-family: 'Humane';
+    font-weight: bold;
+    letter-spacing: 0.03em;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+}
+
+.judul-post h4{
+    font-size: 15px;
+    font-family: 'Myriad Pro';
+    font-weight: 100;
+    letter-spacing: 0.05em;
+    color: #FFFFFF;
+    margin-bottom: 62px;
+}
+
+.postingan-utama h3{
+    margin: 35px 0px 20px 35px;
+    font-family: 'Humane';
+    font-size: 30px;
+    letter-spacing: 0.05em;
+    font-weight: 300;
+    color: #FFFFFF;
+}
+
+.container-post-utama ul li:nth-child(1){
+    background: url(../asset/gambar/gambar-postingan1.png);
+    background-size: cover;
+}
+
+/* .postingan-utama ul li:nth-child(2){
+    background: url(../asset/gambar/gambar-pink-style.png);
+    background-size: cover;
+}
+
+.postingan-utama ul li:nth-child(3){
+    background: url(../asset/gambar/gambar-live-style.png);
+    background-size: cover;
+}
+
+.postingan-utama ul li:nth-child(4){
+    background: url(../asset/gambar/gambar-motivation-tone.png);
+    background-size: cover;
+}
+
+.postingan-utama ul li:nth-child(5){
+    background: url(../asset/gambar/gambar-clean-minimalist.png);
+    background-size: cover;
+} */
 
 /* ----------------------- CREATE POST BAGIAN ------------------------------ */
 
